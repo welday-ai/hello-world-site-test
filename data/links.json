@@ -13,6 +13,11 @@
         "name": "Welday Open Brain",
         "url": "https://welday-open-brain.vercel.app",
         "type": "app"
+      },
+      {
+        "name": "Welday Virtual CEO Website",
+        "url": "https://weldayenterprises.com",
+        "type": "website"
       }
     ]
   },
@@ -27,6 +32,11 @@
         "type": "app"
       },
       {
+        "name": "Idea Incubator Website",
+        "url": "https://idea-incubator.com",
+        "type": "website"
+      },
+      {
         "name": "Idea Rater",
         "url": "https://idea-rater.lovable.app",
         "type": "app"
@@ -39,9 +49,9 @@
     "website_url": "https://www.525600minutes.com/",
     "links": [
       {
-        "name": "525600 Minutes Website",
-        "url": "https://www.525600minutes.com/",
-        "type": "website"
+        "name": "Task Agent",
+        "url": "https://ai-taskagent.lovable.app",
+        "type": "app"
       },
       {
         "name": "525600 Minutes Calendar",
@@ -49,9 +59,9 @@
         "type": "app"
       },
       {
-        "name": "Task Agent",
-        "url": "https://ai-taskagent.lovable.app",
-        "type": "app"
+        "name": "525600 Minutes Website",
+        "url": "https://www.525600minutes.com/",
+        "type": "website"
       }
     ]
   },
@@ -64,6 +74,11 @@
         "name": "3D Concepts",
         "url": "https://concepts-3d.lovable.app",
         "type": "app"
+      },
+      {
+        "name": "3D Concepts Website",
+        "url": "https://finally-ai.wixstudio.com/3dconcepts",
+        "type": "website"
       }
     ]
   },
@@ -73,13 +88,18 @@
     "website_url": "",
     "links": [
       {
-        "name": "Speak Through AI Thought Weaver",
-        "url": "https://thought-to-stage-10.lovable.app",
+        "name": "Fact Checker",
+        "url": "https://fact-checker-wizard.lovable.app",
         "type": "app"
       },
       {
-        "name": "Fact Checker",
-        "url": "https://fact-checker-wizard.lovable.app",
+        "name": "Speak Through AI Website",
+        "url": "https://speakthroughai.com",
+        "type": "website"
+      },
+      {
+        "name": "Speak Through AI Thought Weaver",
+        "url": "https://thought-to-stage-10.lovable.app",
         "type": "app"
       }
     ]
@@ -88,7 +108,13 @@
     "venture": "Drone's Eye Perspectives",
     "slug": "drones-eye",
     "website_url": "",
-    "links": []
+    "links": [
+      {
+        "name": "Drone's Eye Perspectives Website",
+        "url": "https://droneseyeperspectives.com",
+        "type": "website"
+      }
+    ]
   },
   {
     "venture": "Groundbnb",
@@ -96,8 +122,8 @@
     "website_url": "",
     "links": [
       {
-        "name": "Kayak Flipper",
-        "url": "https://kayak-flipper.lovable.app",
+        "name": "Gemini Kayak Flipper",
+        "url": "https://gemini.google.com/share/e51f74a74ab3",
         "type": "app"
       },
       {
@@ -106,8 +132,13 @@
         "type": "app"
       },
       {
-        "name": "Gemini Kayak Flipper",
-        "url": "https://gemini.google.com/share/e51f74a74ab3",
+        "name": "Groundbnb Website",
+        "url": "https://groundbnb.com",
+        "type": "website"
+      },
+      {
+        "name": "Kayak Flipper",
+        "url": "https://kayak-flipper.lovable.app",
         "type": "app"
       }
     ]
@@ -121,6 +152,11 @@
         "name": "One-Click Business Launcher",
         "url": "https://oneclickbusiness.lovable.app",
         "type": "app"
+      },
+      {
+        "name": "One-Click Business Website",
+        "url": "https://oneclickbusiness.org",
+        "type": "website"
       }
     ]
   },
@@ -138,6 +174,11 @@
         "name": "Finally AI Toolchain",
         "url": "https://finally-ai-toolchain.lovable.app",
         "type": "app"
+      },
+      {
+        "name": "Finally AI Website",
+        "url": "https://finally-ai.com",
+        "type": "website"
       }
     ]
   },
@@ -150,6 +191,11 @@
         "name": "What's Next",
         "url": "https://https://whats-next-is.lovable.app",
         "type": "app"
+      },
+      {
+        "name": "WhatsNext.is Website",
+        "url": "https://whatsnext.is",
+        "type": "website"
       }
     ]
   },
@@ -159,9 +205,9 @@
     "website_url": "",
     "links": [
       {
-        "name": "Survey Minds",
-        "url": "https://poll-spark-collective.lovable.app",
-        "type": "app"
+        "name": "AI Consensus Website",
+        "url": "https://ai-consensus.com",
+        "type": "website"
       },
       {
         "name": "Expert Panel (Multi-LLM)",
@@ -171,6 +217,11 @@
       {
         "name": "Fact Checker",
         "url": "https://fact-checker-wizard.vercel.app/",
+        "type": "app"
+      },
+      {
+        "name": "Survey Minds",
+        "url": "https://poll-spark-collective.lovable.app",
         "type": "app"
       }
     ]
