@@ -1,58 +1,231 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Hello World - 1998 Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workspace Markdown Viewer</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --ink: #10213a;
+      --muted: #5f6f89;
+      --line: #d9e1ef;
+      --brand: #0b63f6;
+      --brand-soft: #e8f0ff;
+      --code-bg: #0e1a2b;
+      --code-ink: #e7f0ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 20% 0%, #ffffff 0%, #eef3ff 45%, #f4f6fb 100%);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--line);
+      background: var(--panel);
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    .title {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+    }
+
+    .subtitle {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .doc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .doc-list button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .doc-list button:hover {
+      border-color: var(--brand);
+      background: var(--brand-soft);
+    }
+
+    .doc-list button.active {
+      border-color: var(--brand);
+      background: var(--brand-soft);
+      color: #0a4ccb;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 26px clamp(16px, 3vw, 40px);
+    }
+
+    .viewer {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: clamp(16px, 2.5vw, 28px);
+      box-shadow: 0 8px 25px rgba(19, 36, 68, 0.06);
+    }
+
+    .viewer h1, .viewer h2, .viewer h3 { line-height: 1.25; }
+    .viewer pre {
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 14px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+    .viewer code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+    }
+    .viewer :not(pre) > code {
+      background: #edf2fb;
+      padding: 0.1em 0.35em;
+      border-radius: 6px;
+      color: #27456e;
+    }
+    .viewer blockquote {
+      margin: 0;
+      padding: 0.4rem 1rem;
+      border-left: 4px solid #9eb8e7;
+      background: #f7faff;
+      color: #345;
+    }
+
+    .hint {
+      color: var(--muted);
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+  </style>
 </head>
-<body background="https://www.transparenttextures.com/patterns/stardust.png" bgcolor="#000022" text="#00ff99" link="#ffff00" vlink="#ff66ff" alink="#ff0000">
-  <center>
-    <h1><font face="Comic Sans MS" color="#ffcc00">Hello World</font></h1>
-    <marquee behavior="alternate" scrollamount="12">
-      <font face="Courier New" size="6" color="#00ffff">WELCOME TO MY CYBER HOME PAGE!!!</font>
-    </marquee>
-    <p><font face="Times New Roman" size="4">Best viewed at 800x600 in Netscape Navigator 4.7</font></p>
+<body>
+  <main class="layout">
+    <aside class="sidebar">
+      <h1 class="title">Workspace Markdown Viewer</h1>
+      <p class="subtitle">Documents loaded from this repo's <code>/docs</code> folder.</p>
+      <ul id="docList" class="doc-list"></ul>
+    </aside>
 
-    <table border="4" cellpadding="8" cellspacing="0" bgcolor="#111144" width="80%">
-      <tr>
-        <td align="center"><font face="Verdana" color="#ffffff"><b>NEWS</b></font></td>
-        <td align="center"><font face="Verdana" color="#ffffff"><b>ABOUT ME</b></font></td>
-        <td align="center"><font face="Verdana" color="#ffffff"><b>COOL LINKS</b></font></td>
-      </tr>
-      <tr>
-        <td valign="top">
-          <ul>
-            <li><font face="Arial">04/01/2026: Added extra retro mode</font></li>
-            <li><font face="Arial">03/31/2026: Site launched</font></li>
-          </ul>
-        </td>
-        <td valign="top"><font face="Arial">Hi, I'm building websites by hand in pure HTML. No frameworks. No rules.</font></td>
-        <td valign="top">
-          <ul>
-            <li><a href="https://github.com/finallyaiagency/hello-world-site-test">Source Code</a></li>
-            <li><a href="https://en.wikipedia.org/wiki/Webring">What is a Webring?</a></li>
-          </ul>
-        </td>
-      </tr>
-    </table>
+    <section class="content">
+      <article id="viewer" class="viewer">
+        <p class="hint">Select a file from the left to begin.</p>
+      </article>
+    </section>
+  </main>
 
-    <p>
-      <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="Under Construction" width="220" />
-      <img src="https://media.giphy.com/media/l3vR85PnGsBwu1PFK/giphy.gif" alt="Dancing" width="170" />
-    </p>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const docs = [
+      "docs/delivery-templates/README.md",
+      "docs/delivery-templates/engineering-standards.md"
+    ];
 
-    <p><blink><font color="#ff3300" face="Impact" size="5">NEW! GUESTBOOK COMING SOON!</font></blink></p>
-    <p><font face="Verdana" size="2">You are visitor #000042</font></p>
+    const docList = document.getElementById("docList");
+    const viewer = document.getElementById("viewer");
 
-    <hr width="80%" />
-    <p>
-      <img src="https://img.shields.io/badge/MADE%20WITH-HTML-blue" alt="Made with HTML" />
-      <img src="https://img.shields.io/badge/Netscape-Compatible-brightgreen" alt="Netscape Compatible" />
-      <img src="https://img.shields.io/badge/Best%20Viewed-800x600-orange" alt="Best Viewed 800x600" />
-    </p>
+    function escapeHtml(text) {
+      return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-    <p>
-      <a href="https://github.com/finallyaiagency/hello-world-site-test">Sign my guestbook (coming soon)</a>
-    </p>
-  </center>
+    function setActive(path) {
+      for (const button of docList.querySelectorAll("button")) {
+        button.classList.toggle("active", button.dataset.path === path);
+      }
+    }
+
+    async function loadDoc(path) {
+      setActive(path);
+      viewer.innerHTML = "<p class=\"hint\">Loading...</p>";
+      try {
+        const response = await fetch(path, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const markdown = await response.text();
+        const html = marked.parse(markdown, {
+          mangle: false,
+          headerIds: true,
+          breaks: false
+        });
+        viewer.innerHTML = html;
+      } catch (error) {
+        viewer.innerHTML = `<p><strong>Failed to load file.</strong></p><pre>${escapeHtml(String(error))}</pre>`;
+      }
+    }
+
+    function renderDocList() {
+      const fragment = document.createDocumentFragment();
+      for (const path of docs) {
+        const item = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.path = path;
+        button.textContent = path.replace(/^docs\//, "");
+        button.addEventListener("click", () => loadDoc(path));
+        item.appendChild(button);
+        fragment.appendChild(item);
+      }
+      docList.appendChild(fragment);
+    }
+
+    renderDocList();
+    if (docs.length > 0) {
+      loadDoc(docs[0]);
+    }
+  </script>
 </body>
 </html>
