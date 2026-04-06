@@ -1,231 +1,362 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Workspace Markdown Viewer</title>
-  <style>
-    :root {
-      --bg: #f4f6fb;
-      --panel: #ffffff;
-      --ink: #10213a;
-      --muted: #5f6f89;
-      --line: #d9e1ef;
-      --brand: #0b63f6;
-      --brand-soft: #e8f0ff;
-      --code-bg: #0e1a2b;
-      --code-ink: #e7f0ff;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welday Enterprises Links</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #162031;
+        --muted: #5b6b83;
+        --border: #dce3ee;
+        --accent: #1068e8;
+        --accent-soft: #e8f1ff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #eef4ff, var(--bg) 35%);
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 28px 20px 40px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      }
+      .sub {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+      .toolbar {
+        margin-top: 20px;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: auto auto 1fr auto;
+      }
+      input, select {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 11px 12px;
+        font-size: 0.95rem;
+        background: #fff;
+      }
+      .count {
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+      .grid {
+        margin-top: 16px;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 14px;
+        box-shadow: 0 1px 2px rgba(19, 35, 60, 0.06);
+      }
+      .venture {
+        font-size: 1.03rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 8px;
+      }
+      li {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 10px;
+        background: #fcfdff;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover { text-decoration: underline; }
+      .meta {
+        margin-top: 2px;
+        font-size: 0.8rem;
+        color: var(--muted);
+      }
+      .empty {
+        color: var(--muted);
+        font-size: 0.9rem;
+        background: var(--accent-soft);
+        border: 1px dashed #b9d1ff;
+        border-radius: 8px;
+        padding: 10px;
+      }
+      .foot {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+      .quick-links {
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .quick-links a { margin-right: 10px; }
+      .doc {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        white-space: pre-wrap;
+        line-height: 1.5;
+        font-family: "IBM Plex Mono", "Consolas", monospace;
+      }
+      @media (max-width: 700px) {
+        .toolbar { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Welday Enterprises Links</h1>
+      <p class="sub" id="sub">Pulled from the Welday dashboard venture/app records.</p>
+      <div class="toolbar">
+        <select id="fileType" aria-label="File type">
+          <option value="json">.json</option>
+          <option value="md">.md</option>
+        </select>
+        <select id="view" aria-label="Dataset">
+          <option value="links.json">links.json</option>
+          <option value="portfolio_catalog.json">portfolio_catalog.json</option>
+        </select>
+        <input id="search" type="search" placeholder="Filter by venture, app name, or URL" />
+        <div id="count" class="count">Loading...</div>
+      </div>
+      <p class="quick-links">
+        Quick links:
+        <a href="#json">#json</a>
+        <a href="#md">#md</a>
+      </p>
+      <section id="grid" class="grid" aria-live="polite"></section>
+      <p class="foot">Generated on 2026-04-01 from <code>https://welday-ent-dashboard.lovable.app</code>.</p>
+    </main>
 
-    * { box-sizing: border-box; }
+    <script>
+      const grid = document.getElementById("grid");
+      const count = document.getElementById("count");
+      const search = document.getElementById("search");
+      const view = document.getElementById("view");
+      const fileType = document.getElementById("fileType");
+      const sub = document.getElementById("sub");
+      const title = document.querySelector("h1");
+      const state = { links: null, catalog: null, readme: "", summary: "" };
+      const optionsByType = {
+        json: ["links.json", "portfolio_catalog.json"],
+        md: ["README.md", "WEL-5_Business_Summary.md"],
+      };
+      const params = new URLSearchParams(window.location.search);
+      const hash = window.location.hash.replace(/^#/, "");
 
-    body {
-      margin: 0;
-      font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      color: var(--ink);
-      background: radial-gradient(circle at 20% 0%, #ffffff 0%, #eef3ff 45%, #f4f6fb 100%);
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      border-right: 1px solid var(--line);
-      background: var(--panel);
-      padding: 20px;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: auto;
-    }
-
-    .title {
-      margin: 0 0 6px;
-      font-size: 1.2rem;
-    }
-
-    .subtitle {
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .doc-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      gap: 8px;
-    }
-
-    .doc-list button {
-      width: 100%;
-      text-align: left;
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--ink);
-      border-radius: 10px;
-      padding: 11px 12px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: 0.15s ease;
-    }
-
-    .doc-list button:hover {
-      border-color: var(--brand);
-      background: var(--brand-soft);
-    }
-
-    .doc-list button.active {
-      border-color: var(--brand);
-      background: var(--brand-soft);
-      color: #0a4ccb;
-      font-weight: 600;
-    }
-
-    .content {
-      padding: 26px clamp(16px, 3vw, 40px);
-    }
-
-    .viewer {
-      max-width: 900px;
-      margin: 0 auto;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: clamp(16px, 2.5vw, 28px);
-      box-shadow: 0 8px 25px rgba(19, 36, 68, 0.06);
-    }
-
-    .viewer h1, .viewer h2, .viewer h3 { line-height: 1.25; }
-    .viewer pre {
-      background: var(--code-bg);
-      color: var(--code-ink);
-      padding: 14px;
-      border-radius: 10px;
-      overflow-x: auto;
-    }
-    .viewer code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.92em;
-    }
-    .viewer :not(pre) > code {
-      background: #edf2fb;
-      padding: 0.1em 0.35em;
-      border-radius: 6px;
-      color: #27456e;
-    }
-    .viewer blockquote {
-      margin: 0;
-      padding: 0.4rem 1rem;
-      border-left: 4px solid #9eb8e7;
-      background: #f7faff;
-      color: #345;
-    }
-
-    .hint {
-      color: var(--muted);
-      margin: 0;
-      font-size: 0.95rem;
-    }
-
-    @media (max-width: 900px) {
-      .layout {
-        grid-template-columns: 1fr;
+      function escapeHtml(text) {
+        return text
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll("\"", "&quot;")
+          .replaceAll("'", "&#39;");
       }
 
-      .sidebar {
-        position: static;
-        height: auto;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
+      function normalizeUrl(url) {
+        return url.replace(/^https:\/\/https:\/\//, "https://").trim();
       }
-    }
-  </style>
-</head>
-<body>
-  <main class="layout">
-    <aside class="sidebar">
-      <h1 class="title">Workspace Markdown Viewer</h1>
-      <p class="subtitle">Documents loaded from this repo's <code>/docs</code> folder.</p>
-      <ul id="docList" class="doc-list"></ul>
-    </aside>
 
-    <section class="content">
-      <article id="viewer" class="viewer">
-        <p class="hint">Select a file from the left to begin.</p>
-      </article>
-    </section>
-  </main>
+      function renderLinks(data, filterText = "") {
+        const q = filterText.trim().toLowerCase();
+        const filtered = data
+          .map((venture) => {
+            const links = venture.links.filter((link) => {
+              const url = normalizeUrl(link.url);
+              const haystack = `${venture.venture} ${link.name} ${url}`.toLowerCase();
+              return haystack.includes(q);
+            });
+            const ventureMatch = venture.venture.toLowerCase().includes(q);
+            if (ventureMatch && links.length === 0 && q) return { ...venture, links: venture.links };
+            return { ...venture, links };
+          })
+          .filter((venture) => venture.links.length > 0 || (q === "" && venture.links.length === 0));
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
-    const docs = [
-      "docs/delivery-templates/README.md",
-      "docs/delivery-templates/engineering-standards.md"
-    ];
+        const totalLinks = filtered.reduce((n, venture) => n + venture.links.length, 0);
+        count.textContent = `${filtered.length} ventures | ${totalLinks} links`;
 
-    const docList = document.getElementById("docList");
-    const viewer = document.getElementById("viewer");
-
-    function escapeHtml(text) {
-      return text
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function setActive(path) {
-      for (const button of docList.querySelectorAll("button")) {
-        button.classList.toggle("active", button.dataset.path === path);
-      }
-    }
-
-    async function loadDoc(path) {
-      setActive(path);
-      viewer.innerHTML = "<p class=\"hint\">Loading...</p>";
-      try {
-        const response = await fetch(path, { cache: "no-store" });
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+        if (filtered.length === 0) {
+          grid.innerHTML = `<div class="empty">No matches found for this filter.</div>`;
+          return;
         }
 
-        const markdown = await response.text();
-        const html = marked.parse(markdown, {
-          mangle: false,
-          headerIds: true,
-          breaks: false
+        grid.innerHTML = filtered
+          .map((venture) => {
+            const items = venture.links.length
+              ? `<ul>${venture.links
+                  .map((link) => {
+                    const url = normalizeUrl(link.url);
+                    return `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${link.name}</a><div class="meta">${link.type} · ${url}</div></li>`;
+                  })
+                  .join("")}</ul>`
+              : `<div class="empty">No URL stored yet for this venture in the dashboard data.</div>`;
+            return `<article class="card"><div class="venture">${venture.venture}</div>${items}</article>`;
+          })
+          .join("");
+      }
+
+      function renderCatalog(data, filterText = "") {
+        const q = filterText.trim().toLowerCase();
+        const filtered = data.filter((item) => {
+          const haystack = `${item.name} ${item.description} ${item.url} ${item.icon}`.toLowerCase();
+          return haystack.includes(q);
         });
-        viewer.innerHTML = html;
-      } catch (error) {
-        viewer.innerHTML = `<p><strong>Failed to load file.</strong></p><pre>${escapeHtml(String(error))}</pre>`;
-      }
-    }
 
-    function renderDocList() {
-      const fragment = document.createDocumentFragment();
-      for (const path of docs) {
-        const item = document.createElement("li");
-        const button = document.createElement("button");
-        button.type = "button";
-        button.dataset.path = path;
-        button.textContent = path.replace(/^docs\//, "");
-        button.addEventListener("click", () => loadDoc(path));
-        item.appendChild(button);
-        fragment.appendChild(item);
-      }
-      docList.appendChild(fragment);
-    }
+        count.textContent = `${filtered.length} businesses`;
 
-    renderDocList();
-    if (docs.length > 0) {
-      loadDoc(docs[0]);
-    }
-  </script>
-</body>
+        if (filtered.length === 0) {
+          grid.innerHTML = `<div class="empty">No matches found for this filter.</div>`;
+          return;
+        }
+
+        grid.innerHTML = filtered
+          .map((item) => {
+            return `<article class="card"><div class="venture">${item.name}</div><ul><li><a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.url}</a><div class="meta">${item.description} · icon: ${item.icon}</div></li></ul></article>`;
+          })
+          .join("");
+      }
+
+      function renderMarkdown(text, filterText = "") {
+        const q = filterText.trim().toLowerCase();
+        const lines = text.split("\n");
+        const filteredLines = q
+          ? lines.filter((line) => line.toLowerCase().includes(q))
+          : lines;
+        count.textContent = `${filteredLines.length} lines`;
+        if (filteredLines.length === 0) {
+          grid.innerHTML = `<div class="empty">No matches found for this filter.</div>`;
+          return;
+        }
+        grid.innerHTML = `<article class="doc">${escapeHtml(filteredLines.join("\n"))}</article>`;
+      }
+
+      function resetDatasetOptions() {
+        const type = fileType.value;
+        const options = optionsByType[type];
+        view.innerHTML = options.map((name) => `<option value="${name}">${name}</option>`).join("");
+      }
+
+      function syncUrl() {
+        const current = new URL(window.location.href);
+        current.searchParams.set("fileType", fileType.value);
+        current.searchParams.set("view", view.value);
+        current.hash = fileType.value;
+        window.history.replaceState({}, "", current);
+      }
+
+      function applyView() {
+        const selected = view.value;
+        const type = fileType.value;
+
+        if (type === "json" && selected === "links.json") {
+          title.textContent = "Welday Enterprises Links";
+          sub.textContent = "Pulled from the Welday dashboard venture/app records.";
+          search.placeholder = "Filter by venture, app name, or URL";
+          if (state.links) renderLinks(state.links, search.value);
+          return;
+        }
+
+        if (type === "json" && selected === "portfolio_catalog.json") {
+          title.textContent = "Welday Portfolio Catalog Viewer";
+          sub.textContent = "Viewing structured business catalog records sourced from the portfolio summary.";
+          search.placeholder = "Filter by business name, description, URL, or icon";
+          if (state.catalog) renderCatalog(state.catalog, search.value);
+          return;
+        }
+
+        title.textContent = "Welday Markdown Viewer";
+        sub.textContent = "Browse markdown sources with .md/.json file-type filtering.";
+        search.placeholder = "Filter markdown lines";
+        if (selected === "README.md") {
+          renderMarkdown(state.readme, search.value);
+          return;
+        }
+        renderMarkdown(state.summary, search.value);
+      }
+
+      Promise.all([
+        fetch("./data/links.json")
+          .then((res) => {
+            if (!res.ok) throw new Error(`Failed to load links (${res.status})`);
+            return res.json();
+          }),
+        fetch("./data/portfolio_catalog.json")
+          .then((res) => {
+            if (!res.ok) throw new Error(`Failed to load portfolio catalog (${res.status})`);
+            return res.json();
+          }),
+        fetch("./README.md")
+          .then((res) => {
+            if (!res.ok) throw new Error(`Failed to load README.md (${res.status})`);
+            return res.text();
+          }),
+        fetch("./WEL-5_Business_Summary.md")
+          .then((res) => {
+            if (!res.ok) throw new Error(`Failed to load WEL-5_Business_Summary.md (${res.status})`);
+            return res.text();
+          }),
+      ])
+        .then((res) => {
+          state.links = res[0];
+          state.catalog = res[1];
+          state.readme = res[2];
+          state.summary = res[3];
+
+          const paramType = params.get("fileType");
+          if (paramType && optionsByType[paramType]) {
+            fileType.value = paramType;
+          } else if (hash && optionsByType[hash]) {
+            fileType.value = hash;
+          }
+          resetDatasetOptions();
+          const paramView = params.get("view");
+          const allowedViews = optionsByType[fileType.value];
+          if (paramView && allowedViews.includes(paramView)) view.value = paramView;
+
+          applyView();
+          fileType.addEventListener("change", () => {
+            resetDatasetOptions();
+            applyView();
+            syncUrl();
+          });
+          view.addEventListener("change", () => {
+            applyView();
+            syncUrl();
+          });
+          search.addEventListener("input", applyView);
+          syncUrl();
+        })
+        .catch((err) => {
+          count.textContent = "Load error";
+          grid.innerHTML = `<div class="empty">${err.message}</div>`;
+        });
+    </script>
+  </body>
 </html>

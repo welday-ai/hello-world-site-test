@@ -1,0 +1,178 @@
+[
+  {
+    "venture": "Welday Virtual CEO",
+    "slug": "welday-virtual-ceo",
+    "website_url": "",
+    "links": [
+      {
+        "name": "Welday Ent Dashboard",
+        "url": "https://welday-ent-dashboard.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Welday Open Brain",
+        "url": "https://welday-open-brain.vercel.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "Idea Incubator",
+    "slug": "idea-incubator",
+    "website_url": "",
+    "links": [
+      {
+        "name": "Idea Incubator",
+        "url": "https://idea-incubator-puce.vercel.app/",
+        "type": "app"
+      },
+      {
+        "name": "Idea Rater",
+        "url": "https://idea-rater.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "525600 Minutes",
+    "slug": "525600-minutes",
+    "website_url": "https://www.525600minutes.com/",
+    "links": [
+      {
+        "name": "525600 Minutes Website",
+        "url": "https://www.525600minutes.com/",
+        "type": "website"
+      },
+      {
+        "name": "525600 Minutes Calendar",
+        "url": "https://minutes525600.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Task Agent",
+        "url": "https://ai-taskagent.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "3D Concepts",
+    "slug": "3d-concepts",
+    "website_url": "",
+    "links": [
+      {
+        "name": "3D Concepts",
+        "url": "https://concepts-3d.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "Speak Through AI",
+    "slug": "speak-through-ai",
+    "website_url": "",
+    "links": [
+      {
+        "name": "Speak Through AI Thought Weaver",
+        "url": "https://thought-to-stage-10.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Fact Checker",
+        "url": "https://fact-checker-wizard.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "Drone's Eye Perspectives",
+    "slug": "drones-eye",
+    "website_url": "",
+    "links": []
+  },
+  {
+    "venture": "Groundbnb",
+    "slug": "groundbnb",
+    "website_url": "",
+    "links": [
+      {
+        "name": "Kayak Flipper",
+        "url": "https://kayak-flipper.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Groundbnb Agent",
+        "url": "https://groundbnb-agent.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Gemini Kayak Flipper",
+        "url": "https://gemini.google.com/share/e51f74a74ab3",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "One-Click Business",
+    "slug": "one-click-business",
+    "website_url": "",
+    "links": [
+      {
+        "name": "One-Click Business Launcher",
+        "url": "https://oneclickbusiness.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "Finally AI",
+    "slug": "finally-ai",
+    "website_url": "",
+    "links": [
+      {
+        "name": "Problem Solver",
+        "url": "https://finally-ai-problem-solver.lovable.app/",
+        "type": "app"
+      },
+      {
+        "name": "Finally AI Toolchain",
+        "url": "https://finally-ai-toolchain.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "WhatsNext.is",
+    "slug": "whatsnext-is",
+    "website_url": "",
+    "links": [
+      {
+        "name": "What's Next",
+        "url": "https://https://whats-next-is.lovable.app",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "venture": "AI Consensus",
+    "slug": "ai-consensus",
+    "website_url": "",
+    "links": [
+      {
+        "name": "Survey Minds",
+        "url": "https://poll-spark-collective.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Expert Panel (Multi-LLM)",
+        "url": "https://consensus-mind-99.lovable.app",
+        "type": "app"
+      },
+      {
+        "name": "Fact Checker",
+        "url": "https://fact-checker-wizard.vercel.app/",
+        "type": "app"
+      }
+    ]
+  }
+]
